@@ -38,9 +38,9 @@ defined('TYPO3_MODE') or die('Access denied.');
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][2302981747] = [
-        'nodeName' => 'GoogleMap',
+        'nodeName' => 'MapFormElement',
         'priority' => 40,
-        'class' => \Netresearch\ContextsGeolocation\Form\GoogleMapFormElement::class,
+        'class' => \Netresearch\ContextsGeolocation\Form\MapFormElement::class,
     ];
 
 })('mask');
