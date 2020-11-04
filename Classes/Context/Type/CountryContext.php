@@ -44,7 +44,7 @@ class CountryContext extends \Netresearch\Contexts\Context\AbstractContext
      *
      * @return bool True if the context is active, false if not
      */
-    public function match(array $arDependencies = [])
+    public function match(array $arDependencies = []): bool
     {
         list($bUseMatch, $bMatch) = $this->getMatchFromSession();
         if ($bUseMatch) {
@@ -63,12 +63,12 @@ class CountryContext extends \Netresearch\Contexts\Context\AbstractContext
      * @return bool True if the user's country is in the list of
      *                 allowed countries, false if not
      */
-    public function matchCountries()
+    public function matchCountries(): bool
     {
         try {
             $strCountries = trim($this->getConfValue('field_countries'));
 
-            if ($strCountries == '') {
+            if ($strCountries === '') {
                 //nothing configured? no match.
                 return false;
             }
@@ -82,12 +82,12 @@ class CountryContext extends \Netresearch\Contexts\Context\AbstractContext
             $strCountry  = $geoip->getCountryCode(true);
 
             if (($strCountry === false)
-                && in_array('*unknown*', $arCountries)
+                && in_array('*unknown*', $arCountries, true)
             ) {
                 return true;
             }
             if (($strCountry !== false)
-                && in_array($strCountry, $arCountries)
+                && in_array($strCountry, $arCountries, true)
             ) {
                 return true;
             }

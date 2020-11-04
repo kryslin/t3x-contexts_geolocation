@@ -11,21 +11,36 @@
  */
 defined('TYPO3_MODE') or die('Access denied.');
 
-$arPluginList = [
-    'Position'     => [
-        'action' => [
-            'Position' => 'show'
+(static function ($extKey) {
+    $arPluginList = [
+        'Position'     => [
+            'action' => [
+                'Position' => 'show'
+            ],
+            'noncachable' => [],
         ],
-        'noncachable' => [],
-    ],
-];
+    ];
 
-foreach ($arPluginList as $strPluginName => $arControllerActions) {
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Netresearch.' . $_EXTKEY,
-        $strPluginName,
-        $arControllerActions['action'],
-        // non-cacheable actions
-        $arControllerActions['noncachable']
-    );
-}
+    foreach ($arPluginList as $strPluginName => $arControllerActions) {
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Netresearch.' . $extKey,
+            $strPluginName,
+            $arControllerActions['action'],
+            // non-cacheable actions
+            $arControllerActions['noncachable']
+        );
+    }
+
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1602981747] = [
+        'nodeName' => 'SetupCheck',
+        'priority' => 40,
+        'class' => \Netresearch\ContextsGeolocation\Form\SetupCheckFormElement::class,
+    ];
+
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][2302981747] = [
+        'nodeName' => 'GoogleMap',
+        'priority' => 40,
+        'class' => \Netresearch\ContextsGeolocation\Form\GoogleMapFormElement::class,
+    ];
+
+})('mask');

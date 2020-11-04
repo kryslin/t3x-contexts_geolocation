@@ -11,6 +11,7 @@
          <label>LLL:EXT:contexts_geolocation/Resources/Private/Language/flexform.xml:continent.field_continents</label>
          <config>
            <type>select</type>
+           <renderType>selectMultipleSideBySide</renderType>
            <items type="array">
             <numIndex index="0" type="array">
              <numIndex index="0">- unknown -</numIndex>
@@ -57,8 +58,8 @@
          <label></label>
          <config>
            <type>user</type>
-           <form_type>user</form_type>
-           <userFunc>Netresearch\ContextsGeolocation\Backend-&gt;setupCheck</userFunc>
+           <renderType>SetupCheck</renderType>
+           <userFunc>Netresearch\ContextsGeolocation\Form\SetupCheckFormElement->render</userFunc>
          </config>
        </TCEforms>
      </field_setupCheck>

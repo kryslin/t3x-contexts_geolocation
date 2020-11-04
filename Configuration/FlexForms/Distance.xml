@@ -24,8 +24,8 @@
            <type>user</type>
            <size>40</size>
            <eval>trim,required</eval>
-           <form_type>user</form_type>
-           <userFunc>Netresearch\ContextsGeolocation\Backend-&gt;inputMapPosition</userFunc>
+           <renderType>GoogleMap</renderType>
+           <userFunc>Netresearch\ContextsGeolocation\Form\SetupCheckFormElement->render</userFunc>
          </config>
        </TCEforms>
      </field_position>
@@ -45,8 +45,8 @@
          <label></label>
          <config>
            <type>user</type>
-           <form_type>user</form_type>
-           <userFunc>Netresearch\ContextsGeolocation\Backend-&gt;setupCheck</userFunc>
+           <renderType>SetupCheck</renderType>
+           <userFunc>Netresearch\ContextsGeolocation\Form\SetupCheckFormElement->render</userFunc>
          </config>
        </TCEforms>
      </field_setupCheck>

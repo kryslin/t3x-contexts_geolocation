@@ -44,7 +44,7 @@ class DistanceContext extends \Netresearch\Contexts\Context\AbstractContext
      *
      * @return bool True if the context is active, false if not
      */
-    public function match(array $arDependencies = [])
+    public function match(array $arDependencies = []): bool
     {
         list($bUseMatch, $bMatch) = $this->getMatchFromSession();
         if ($bUseMatch) {

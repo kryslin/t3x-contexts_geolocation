@@ -11,23 +11,26 @@
  */
 defined('TYPO3_MODE') or die('Access denied.');
 
-$arPluginList = [
-    'Position'       => false,
-];
+(static function ($extKey) {
 
-foreach ($arPluginList as $strPluginName => $bUseFlexform) {
-    $strPluginKey = strtolower(str_replace('_', '', $_EXTKEY) . '_' . $strPluginName);
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        $_EXTKEY,
-        $strPluginName,
-        $strPluginName
-    );
-    if ($bUseFlexform) {
-        $TCA['tt_content']['types']['list']['subtypes_addlist'][$strPluginKey]
-            = 'pi_flexform';
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-            $strPluginKey,
-            'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/' . $strPluginName . '.xml'
+    $arPluginList = [
+        'Position' => false,
+    ];
+
+    foreach ($arPluginList as $strPluginName => $bUseFlexform) {
+        $strPluginKey = strtolower(str_replace('_', '', $extKey) . '_' . $strPluginName);
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            $extKey,
+            $strPluginName,
+            $strPluginName
         );
+        if ($bUseFlexform) {
+            $TCA['tt_content']['types']['list']['subtypes_addlist'][$strPluginKey]
+                = 'pi_flexform';
+            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+                $strPluginKey,
+                'FILE:EXT:' . $extKey . '/Configuration/FlexForms/' . $strPluginName . '.xml'
+            );
+        }
     }
-}
+})('mask');
