@@ -1,5 +1,7 @@
 <?php
+
 namespace Netresearch\ContextsGeolocation\Context\Type;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,30 +24,27 @@ namespace Netresearch\ContextsGeolocation\Context\Type;
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-use \Netresearch\ContextsGeolocation\AbstractAdapter;
-use \Netresearch\ContextsGeolocation\Exception;
+use Netresearch\ContextsGeolocation\AbstractAdapter;
+use Netresearch\ContextsGeolocation\Exception;
 
 /**
  * Distance between given point and user's IP.
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Christian Weiske <christian.weiske@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
  */
-class DistanceContext
-    extends \Netresearch\Contexts\Context\AbstractContext
+class DistanceContext extends \Netresearch\Contexts\Context\AbstractContext
 {
     /**
      * Check if the context is active now.
      *
      * @param array $arDependencies Array of dependent context objects
      *
-     * @return boolean True if the context is active, false if not
+     * @return bool True if the context is active, false if not
      */
-    public function match(array $arDependencies = array())
+    public function match(array $arDependencies = [])
     {
         list($bUseMatch, $bMatch) = $this->getMatchFromSession();
         if ($bUseMatch) {
@@ -63,7 +62,7 @@ class DistanceContext
      * Detects the user's IP position and checks if it is within
      * the given radius.
      *
-     * @return boolean True if the user's position is within the given
+     * @return bool True if the user's position is within the given
      *                 radius around the configured position.
      */
     public function matchDistance()
@@ -74,7 +73,7 @@ class DistanceContext
                     $this->getRemoteAddress()
                 );
 
-            $bUnknown   = (bool) $this->getConfValue('field_unknown');
+            $bUnknown   = (bool)$this->getConfValue('field_unknown');
             $arPosition = $geoip->getLocation();
 
             if ($arPosition === false) {
@@ -100,11 +99,13 @@ class DistanceContext
             list($reqLat, $reqLong) = explode(',', $strPosition);
 
             $flDistance = $this->getDistance(
-                $reqLat, $reqLong,
-                $arPosition['latitude'], $arPosition['longitude']
+                $reqLat,
+                $reqLong,
+                $arPosition['latitude'],
+                $arPosition['longitude']
             );
 
-            return $flDistance <= ((float) $strMaxDistance);
+            return $flDistance <= ((float)$strMaxDistance);
         } catch (Exception $exception) {
             return false;
         }
@@ -139,4 +140,3 @@ class DistanceContext
         return $d;
     }
 }
-?>

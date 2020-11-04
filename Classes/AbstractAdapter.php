@@ -1,4 +1,5 @@
 <?php
+
 namespace Netresearch\ContextsGeolocation;
 
 /**
@@ -7,22 +8,17 @@ namespace Netresearch\ContextsGeolocation;
  * PHP version 5
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Rico Sonntag <rico.sonntag@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
  */
-use Netresearch\ContextsGeolocation\Exception;
-use Netresearch\ContextsGeolocation\Adapter\NetGeoIp;
 use Netresearch\ContextsGeolocation\Adapter\GeoIp;
+use Netresearch\ContextsGeolocation\Adapter\NetGeoIp;
 
 /**
  * Abstract base class for each adapter.
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Rico Sonntag <rico.sonntag@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
@@ -34,7 +30,7 @@ abstract class AbstractAdapter
      *
      * @var string
      */
-    protected $ip = null;
+    protected $ip;
 
     /**
      * Get an adapter instance.
@@ -77,7 +73,7 @@ abstract class AbstractAdapter
     /**
      * Get two or three letter country code.
      *
-     * @param boolean $threeLetterCode TRUE to return 3-letter country code
+     * @param bool $threeLetterCode TRUE to return 3-letter country code
      *
      * @return string|false Country code or FALSE on failure
      */
@@ -112,4 +108,3 @@ abstract class AbstractAdapter
      */
     abstract public function getOrganization();
 }
-?>

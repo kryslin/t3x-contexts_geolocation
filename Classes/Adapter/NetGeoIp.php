@@ -1,13 +1,13 @@
 <?php
+
 namespace Netresearch\ContextsGeolocation\Adapter;
+
 /**
  * Part of geolocation context extension.
  *
  * PHP version 5
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Rico Sonntag <rico.sonntag@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
@@ -18,36 +18,32 @@ use Netresearch\ContextsGeolocation\Exception;
  * Provides an adapter to the PEAR class "Net_GeoIP".
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Rico Sonntag <rico.sonntag@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
  * @uses       http://pear.php.net/package/Net_GeoIP/
  */
-class NetGeoIp
-    extends \Netresearch\ContextsGeolocation\AbstractAdapter
+class NetGeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
 {
     /**
      * Internal Net_GeoIP instance used for querying country database.
      *
      * @var Net_GeoIP
      */
-    protected $geoLiteCountry = null;
+    protected $geoLiteCountry;
 
     /**
      * Internal Net_GeoIP instance used for querying city database.
      *
      * @var Net_GeoIP
      */
-    protected $geoLiteCity = null;
+    protected $geoLiteCity;
 
     /**
      * Constructor. Protected to prevent direct instanciation.
      *
      * @param string $ip IP address
      *
-     * @return void
      *
      * @throws Tx_ContextsGeolocation_Exception when the database cannot
      *         be found
@@ -88,8 +84,6 @@ class NetGeoIp
 
     /**
      * Prevent cloning of class.
-     *
-     * @return void
      */
     private function __clone()
     {
@@ -98,16 +92,16 @@ class NetGeoIp
     /**
      * Returns TRUE if extension is available with in PEAR.
      *
-     * @return boolean
+     * @return bool
      *
      * TODO Use PEAR_Registry if possible
      */
     protected static function checkPear()
     {
         // Try to include PEAR extension, Suppress E_WARNING message
-        $result = @include_once "Net/GeoIP.php";
+        $result = @include_once 'Net/GeoIP.php';
 
-        return (bool) $result;
+        return (bool)$result;
     }
 
     /**
@@ -146,7 +140,7 @@ class NetGeoIp
     /**
      * Get two or three letter country code.
      *
-     * @param boolean $threeLetterCode TRUE to return 3-letter country code
+     * @param bool $threeLetterCode TRUE to return 3-letter country code
      *
      * @return string|false Country code or FALSE on failure
      */
@@ -226,4 +220,3 @@ class NetGeoIp
         return false;
     }
 }
-?>

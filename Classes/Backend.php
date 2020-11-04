@@ -1,13 +1,13 @@
 <?php
+
 namespace Netresearch\ContextsGeolocation;
+
 /**
  * Part of geolocation context extension.
  *
  * PHP version 5
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Christian Weiske <christian.weiske@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
@@ -18,8 +18,6 @@ namespace Netresearch\ContextsGeolocation;
  * Provides methods used in the backend by flexforms.
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Christian Weiske <christian.weiske@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
@@ -32,21 +30,20 @@ class Backend
      *
      * @param array  &$params      Additional parameters
      * @param object $parentObject Parent object instance
-     *
-     * @return void
      */
     public function getCountries(array &$params, $parentObject)
     {
         $arRows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
             'cn_iso_3 AS code, cn_short_en AS name',
             'static_countries',
-            '', 'name ASC'
+            '',
+            'name ASC'
         );
-        $params['items'][] = array('- unknown -', '*unknown*');
+        $params['items'][] = ['- unknown -', '*unknown*'];
         foreach ($arRows as $arRow) {
-            $params['items'][] = array(
+            $params['items'][] = [
                 $arRow['name'], $arRow['code']
-            );
+            ];
         }
     }
 
@@ -70,14 +67,14 @@ class Backend
         if (is_array($flex)
             && isset($flex['data']['sDEF']['lDEF']['field_position']['vDEF'])
         ) {
-             list($lat, $lon) = explode(
-                 ',',
-                 $flex['data']['sDEF']['lDEF']['field_position']['vDEF']
-             );
-             $lat      = (float) trim($lat);
-             $lon      = (float) trim($lon);
-             $jZoom    = 10;
-             $inputVal = $flex['data']['sDEF']['lDEF']['field_position']['vDEF'];
+            list($lat, $lon) = explode(
+                ',',
+                $flex['data']['sDEF']['lDEF']['field_position']['vDEF']
+            );
+            $lat      = (float)trim($lat);
+            $lon      = (float)trim($lon);
+            $jZoom    = 10;
+            $inputVal = $flex['data']['sDEF']['lDEF']['field_position']['vDEF'];
         } else {
             // TODO: geoip current address
             $lat      = 51.33876;
@@ -93,7 +90,7 @@ class Backend
             && isset($flex['data']['sDEF']['lDEF']['field_distance']['vDEF'])
         ) {
             $jRadius = json_encode(
-                (float) $flex['data']['sDEF']['lDEF']['field_distance']['vDEF']
+                (float)$flex['data']['sDEF']['lDEF']['field_distance']['vDEF']
             );
         } else {
             $jRadius = 10;
@@ -101,24 +98,26 @@ class Backend
 
         if ($tceforms instanceof \TYPO3\CMS\Backend\Form\FormEngine) {
             $input = $tceforms->getSingleField_typeInput(
-                $arFieldInfo['table'], $arFieldInfo['field'],
-                $arFieldInfo['row'], $arFieldInfo
+                $arFieldInfo['table'],
+                $arFieldInfo['field'],
+                $arFieldInfo['row'],
+                $arFieldInfo
             );
         } elseif ($tceforms instanceof \TYPO3\CMS\Backend\Form\Element\UserElement) {
             $factory = new \TYPO3\CMS\Backend\Form\NodeFactory();
             $nodeInput = $factory->create(
-                array(
+                [
                     'renderType' => 'input',
                     'tableName' => $arFieldInfo['table'],
                     'databaseRow' => $arFieldInfo['row'],
                     'fieldName' => $arFieldInfo['field'],
                     'parameterArray' => $arFieldInfo,
-                )
+                ]
             );
             $arInput = $nodeInput->render();
             $input = $arInput['html'];
         } else {
-           return '';
+            return '';
         }
 
         preg_match('#id=["\']([^"\']+)["\']#', $input, $arMatches);
@@ -253,15 +252,12 @@ HTM;
     /**
      * Check if the extension has been setup properly.
      * Renders a flash message when geoip is not available.
-     *
-     * @return void
      */
     public function setupCheck()
     {
         try {
             AbstractAdapter::getInstance();
         } catch (Exception $exception) {
-
             $strMessage =  'The "<tt>geoip</tt>" PHP extension is not available.'
                 . ' Geolocation contexts will not work.';
             /* @var $message \TYPO3\CMS\Core\Messaging\FlashMessage */
@@ -278,7 +274,6 @@ HTM;
             );
             $queue = $flashMessageService->getMessageQueueByIdentifier();
             $queue->addMessage($message);
-
         }
     }
 
@@ -296,4 +291,3 @@ HTM;
         return $arExtConf['app_key'];
     }
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+
 // Register context
 \Netresearch\Contexts\Api\Configuration::registerContextType(
     'geolocation_country',

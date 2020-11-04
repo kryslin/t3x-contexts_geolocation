@@ -1,13 +1,13 @@
 <?php
+
 namespace Netresearch\ContextsGeolocation\Controller;
+
 use Netresearch\ContextsGeolocation\AbstractAdapter;
 
 /**
  * Plugin to display the location of an IP address on a map
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Christian Weiske <christian.weiske@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
@@ -28,11 +28,11 @@ class PositionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $data  = $geoip->getLocation();
 
         $this->view->assignMultiple(
-            array(
+            [
                 'form' => $this->renderForm($ip),
                 'map'  => $this->renderMap($ip, $data),
                 'data' =>  $this->renderData($ip, $data)
-            )
+            ]
         );
     }
 
@@ -51,11 +51,15 @@ class PositionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         $strGetIp = $_GET['ip'];
         $bIpv4 = filter_var(
-                $strGetIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4
-            ) !== false;
+            $strGetIp,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_IPV4
+        ) !== false;
         $bIpv6 = filter_var(
-                $strGetIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6
-            ) !== false;
+            $strGetIp,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_IPV6
+        ) !== false;
 
         if (!$bIpv4 && !$bIpv6) {
             //invalid IP
@@ -120,8 +124,8 @@ HTM;
             return '';
         }
 
-        $flLat = (float) $data['latitude'];
-        $flLon = (float) $data['longitude'];
+        $flLat = (float)$data['latitude'];
+        $flLon = (float)$data['longitude'];
         $jLat  = json_encode($flLat);
         $jLon  = json_encode($flLon);
         $jZoom = 10;
@@ -172,4 +176,3 @@ HTM;
         return $arExtConf['app_key'];
     }
 }
-?>

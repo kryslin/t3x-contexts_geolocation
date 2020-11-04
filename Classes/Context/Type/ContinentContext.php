@@ -1,5 +1,7 @@
 <?php
+
 namespace Netresearch\ContextsGeolocation\Context\Type;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,30 +24,27 @@ namespace Netresearch\ContextsGeolocation\Context\Type;
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-use \Netresearch\ContextsGeolocation\AbstractAdapter;
-use \Netresearch\ContextsGeolocation\Exception;
+use Netresearch\ContextsGeolocation\AbstractAdapter;
+use Netresearch\ContextsGeolocation\Exception;
 
 /**
  * Checks that the continent of the user is one of the configured ones.
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Christian Weiske <christian.weiske@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
  */
-class ContinentContext
-    extends \Netresearch\Contexts\Context\AbstractContext
+class ContinentContext extends \Netresearch\Contexts\Context\AbstractContext
 {
     /**
      * Check if the context is active now.
      *
      * @param array $arDependencies Array of dependent context objects
      *
-     * @return boolean True if the context is active, false if not
+     * @return bool True if the context is active, false if not
      */
-    public function match(array $arDependencies = array())
+    public function match(array $arDependencies = [])
     {
         list($bUseMatch, $bMatch) = $this->getMatchFromSession();
         if ($bUseMatch) {
@@ -61,7 +60,7 @@ class ContinentContext
      * Detects the current continent and matches it against the list
      * of allowed continents
      *
-     * @return boolean True if the user's continent is in the list of
+     * @return bool True if the user's continent is in the list of
      *                 allowed continents, false if not
      */
     public function matchContinents()
@@ -99,4 +98,3 @@ class ContinentContext
         return false;
     }
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Netresearch\ContextsGeolocation\Adapter;
 
 /**
@@ -7,8 +8,6 @@ namespace Netresearch\ContextsGeolocation\Adapter;
  * PHP version 5
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Rico Sonntag <rico.sonntag@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
@@ -18,22 +17,17 @@ namespace Netresearch\ContextsGeolocation\Adapter;
  * Provides an adapter to the PHP "geoip" extension.
  *
  * @category   TYPO3-Extensions
- * @package    Contexts
- * @subpackage Geolocation
  * @author     Rico Sonntag <rico.sonntag@netresearch.de>
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
  * @uses       http://www.php.net/manual/en/book.geoip.php
  */
-class GeoIp
-    extends \Netresearch\ContextsGeolocation\AbstractAdapter
+class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
 {
     /**
      * Constructor. Protected to prevent direct instanciation.
      *
      * @param string $ip IP address
-     *
-     * @return void
      */
     private function __construct($ip = null)
     {
@@ -42,8 +36,6 @@ class GeoIp
 
     /**
      * Prevent cloning of class.
-     *
-     * @return void
      */
     private function __clone()
     {
@@ -79,7 +71,7 @@ class GeoIp
     /**
      * Get two or three letter country code.
      *
-     * @param boolean $threeLetterCode TRUE to return 3-letter country code
+     * @param bool $threeLetterCode TRUE to return 3-letter country code
      *
      * @return string|false Country code or FALSE on failure
      */
@@ -112,7 +104,7 @@ class GeoIp
         $data = geoip_record_by_name($this->ip);
 
         // Map data
-        return array(
+        return [
             'continentCode' => $data['continent_code'],
             'countryCode'   => $data['country_code'],
             'countryCode3'  => $data['country_code3'],
@@ -124,7 +116,7 @@ class GeoIp
             'longitude'     => $data['longitude'],
             'dmaCode'       => $data['dma_code'],
             'areaCode'      => $data['area_code'],
-        );
+        ];
     }
 
     /**
@@ -148,4 +140,3 @@ class GeoIp
         return geoip_org_by_name($this->ip);
     }
 }
-?>
