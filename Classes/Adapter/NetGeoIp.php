@@ -42,17 +42,18 @@ class NetGeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
     /**
      * Constructor. Protected to prevent direct instanciation.
      *
-     * @param string $ip IP address
+     * @param string|null $ip IP address
      *
      *
-     * @throws Tx_ContextsGeolocation_Exception when the database cannot
+     * @throws Exception when the database cannot
      *         be found
      */
-    private function __construct($ip = null)
+    private function __construct(?string $ip = null)
     {
         // Get extension configuration
         $extConfig = unserialize(
-            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['contexts_geolocation']
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['contexts_geolocation'],
+            ['allowed_classes' => false]
         );
 
         $dbPath = null;
@@ -96,10 +97,10 @@ class NetGeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      *
      * TODO Use PEAR_Registry if possible
      */
-    protected static function checkPear()
+    protected static function checkPear(): bool
     {
         // Try to include PEAR extension, Suppress E_WARNING message
-        $result = @include_once 'Net/GeoIP.php';
+        $result = @include 'Net/GeoIP.php';
 
         return (bool)$result;
     }
@@ -108,11 +109,12 @@ class NetGeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * Get instance of class. Returns null if the Net_GeoIP class is
      * not available.
      *
-     * @param string $ip IP address
+     * @param string|null $ip IP address
      *
-     * @return Tx_ContextsGeolocation_Adapter_NetGeoIp|null
+     * @return self|null
+     * @throws Exception
      */
-    public static function getInstance($ip = null)
+    public static function getInstance(?string $ip = null): ?self
     {
         if (self::checkPear() && class_exists('Net_GeoIP', true)) {
             return new self($ip);

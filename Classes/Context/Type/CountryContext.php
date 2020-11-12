@@ -46,7 +46,7 @@ class CountryContext extends \Netresearch\Contexts\Context\AbstractContext
      */
     public function match(array $arDependencies = []): bool
     {
-        list($bUseMatch, $bMatch) = $this->getMatchFromSession();
+        [$bUseMatch, $bMatch] = $this->getMatchFromSession();
         if ($bUseMatch) {
             return $this->invert($bMatch);
         }

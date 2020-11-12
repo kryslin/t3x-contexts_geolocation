@@ -18,10 +18,8 @@ class PositionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     /**
      * Plugin main function.
      *
-     *
-     * @return string The content after this plugin.
      */
-    public function showAction()
+    public function showAction(): void
     {
         $ip    = $this->getIp();
         $geoip = AbstractAdapter::getInstance($ip);
@@ -43,7 +41,7 @@ class PositionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @return string IP address
      */
-    protected function getIp()
+    protected function getIp(): string
     {
         if (!isset($_GET['ip'])) {
             return $_SERVER['REMOTE_ADDR'];
@@ -76,7 +74,7 @@ class PositionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @return string HTML code
      */
-    protected function renderForm($ip)
+    protected function renderForm($ip): string
     {
         $strIp     = htmlspecialchars($ip);
         $strPageId = htmlspecialchars($GLOBALS['TSFE']->id);
@@ -101,7 +99,7 @@ HTM;
      *
      * @return string HTML code
      */
-    protected function renderData($ip, $data)
+    protected function renderData($ip, $data): string
     {
         return '<h3>Data about this IP</h3>'
             . '<pre>'
@@ -117,9 +115,9 @@ HTM;
      *
      * @return string HTML code
      */
-    protected function renderMap($ip, $data)
+    protected function renderMap($ip, $data): string
     {
-        if ($data['latitude'] == 0 && $data['longitude'] == 0) {
+        if ($data['latitude'] === 0 && $data['longitude'] === 0) {
             //broken position
             return '';
         }
@@ -167,10 +165,11 @@ HTM;
      *
      * @return string|null app key
      */
-    protected function getAppKey()
+    protected function getAppKey(): ?string
     {
         $arExtConf = unserialize(
-            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['contexts_geolocation']
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['contexts_geolocation'],
+            ['allowed_classes' => false]
         );
 
         return $arExtConf['app_key'];

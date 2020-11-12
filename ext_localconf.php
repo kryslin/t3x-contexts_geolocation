@@ -43,4 +43,4 @@ defined('TYPO3_MODE') or die('Access denied.');
         'class' => \Netresearch\ContextsGeolocation\Form\MapFormElement::class,
     ];
 
-})('mask');
+})('contexts_geolocation');

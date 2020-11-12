@@ -33,4 +33,4 @@ defined('TYPO3_MODE') or die('Access denied.');
             );
         }
     }
-})('mask');
+})('contexts_geolocation');

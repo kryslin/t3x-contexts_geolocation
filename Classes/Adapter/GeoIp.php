@@ -27,9 +27,9 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
     /**
      * Constructor. Protected to prevent direct instanciation.
      *
-     * @param string $ip IP address
+     * @param string|null $ip IP address
      */
-    private function __construct($ip = null)
+    private function __construct(?string $ip = null)
     {
         $this->ip = $ip;
     }
@@ -45,11 +45,11 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * Get instance of class. Returns null if geoip extension is
      * not available.
      *
-     * @param string $ip IP address
+     * @param string|null $ip IP address
      *
-     * @return Tx_ContextsGeolocation_Adapter_GeoIp|null
+     * @return self|null
      */
-    public static function getInstance($ip = null)
+    public static function getInstance(?string $ip = null): ?self
     {
         if (extension_loaded('geoip')) {
             return new self($ip);
@@ -62,6 +62,7 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * Get two-letter continent code.
      *
      * @return string|false Continent code or FALSE on failure
+     * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getContinentCode()
     {
@@ -74,6 +75,7 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * @param bool $threeLetterCode TRUE to return 3-letter country code
      *
      * @return string|false Country code or FALSE on failure
+     * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getCountryCode($threeLetterCode = false)
     {
@@ -88,6 +90,7 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * Get country name.
      *
      * @return string|false Country name or FALSE on failure
+     * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getCountryName()
     {
@@ -98,6 +101,7 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * Get location record.
      *
      * @return array|false Location data or FALSE on failure
+     * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getLocation()
     {
@@ -123,6 +127,7 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * Get country code and region.
      *
      * @return array|false Region data or FALSE on failure
+     * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getRegion()
     {
@@ -134,6 +139,7 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * IP address range.
      *
      * @return string|false Organization name or FALSE on failure
+     * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getOrganization()
     {

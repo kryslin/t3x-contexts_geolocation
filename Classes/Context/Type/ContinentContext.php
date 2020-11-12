@@ -46,7 +46,7 @@ class ContinentContext extends \Netresearch\Contexts\Context\AbstractContext
      */
     public function match(array $arDependencies = []): bool
     {
-        list($bUseMatch, $bMatch) = $this->getMatchFromSession();
+        [$bUseMatch, $bMatch] = $this->getMatchFromSession();
         if ($bUseMatch) {
             return $this->invert($bMatch);
         }
@@ -63,12 +63,12 @@ class ContinentContext extends \Netresearch\Contexts\Context\AbstractContext
      * @return bool True if the user's continent is in the list of
      *                 allowed continents, false if not
      */
-    public function matchContinents()
+    public function matchContinents(): bool
     {
         try {
             $strContinents = trim($this->getConfValue('field_continents'));
 
-            if ($strContinents == '') {
+            if ($strContinents === '') {
                 //nothing configured? no match.
                 return false;
             }
@@ -82,13 +82,13 @@ class ContinentContext extends \Netresearch\Contexts\Context\AbstractContext
             $strContinent = $geoip->getContinentCode();
 
             if (($strContinent === false)
-                && in_array('*unknown*', $arContinents)
+                && in_array('*unknown*', $arContinents, true)
             ) {
                 return true;
             }
 
             if (($strContinent !== false)
-                && in_array($strContinent, $arContinents)
+                && in_array($strContinent, $arContinents, true)
             ) {
                 return true;
             }

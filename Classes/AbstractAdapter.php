@@ -35,12 +35,12 @@ abstract class AbstractAdapter
     /**
      * Get an adapter instance.
      *
-     * @param string $ip IP address
+     * @param string|null $ip IP address
      *
-     * @return Tx_ContextsGeolocation_Adapter
-     * @throws Tx_ContextsGeolocation_Exception
+     * @return self
+     * @throws Exception
      */
-    public static function getInstance($ip = null)
+    public static function getInstance(?string $ip = null): self
     {
         static $instance = null;
 

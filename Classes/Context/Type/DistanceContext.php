@@ -46,7 +46,7 @@ class DistanceContext extends \Netresearch\Contexts\Context\AbstractContext
      */
     public function match(array $arDependencies = []): bool
     {
-        list($bUseMatch, $bMatch) = $this->getMatchFromSession();
+        [$bUseMatch, $bMatch] = $this->getMatchFromSession();
         if ($bUseMatch) {
             return $this->invert($bMatch);
         }
@@ -65,7 +65,7 @@ class DistanceContext extends \Netresearch\Contexts\Context\AbstractContext
      * @return bool True if the user's position is within the given
      *                 radius around the configured position.
      */
-    public function matchDistance()
+    public function matchDistance(): bool
     {
         try {
             $geoip = AbstractAdapter
@@ -81,9 +81,7 @@ class DistanceContext extends \Netresearch\Contexts\Context\AbstractContext
                 return $bUnknown;
             }
 
-            if (($arPosition['latitude'] == 0)
-                && ($arPosition['longitude'] == 0)
-            ) {
+            if ($arPosition['latitude'] === 0 && $arPosition['longitude'] === 0) {
                 //broken position
                 return $bUnknown;
             }
@@ -91,7 +89,7 @@ class DistanceContext extends \Netresearch\Contexts\Context\AbstractContext
             $strPosition    = trim($this->getConfValue('field_position'));
             $strMaxDistance = trim($this->getConfValue('field_distance'));
 
-            if (($strPosition == '') || ($strMaxDistance == '')) {
+            if ($strPosition === '' || $strMaxDistance === '') {
                 //nothing configured? no match.
                 return false;
             }
@@ -124,7 +122,7 @@ class DistanceContext extends \Netresearch\Contexts\Context\AbstractContext
      * @link http://en.wikipedia.org/wiki/Haversine_formula
      * @link http://www.codecodex.com/wiki/Calculate_Distance_Between_Two_Points_on_a_Globe#PHP
      */
-    protected function getDistance($latitude1, $longitude1, $latitude2, $longitude2)
+    protected function getDistance($latitude1, $longitude1, $latitude2, $longitude2): float
     {
         $earth_radius = 6371;
 
@@ -135,8 +133,6 @@ class DistanceContext extends \Netresearch\Contexts\Context\AbstractContext
             + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2))
             * sin($dLon/2) * sin($dLon/2);
         $c = 2 * asin(sqrt($a));
-        $d = $earth_radius * $c;
-
-        return $d;
+        return $earth_radius * $c;
     }
 }

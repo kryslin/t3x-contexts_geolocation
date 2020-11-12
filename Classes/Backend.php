@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @license    http://opensource.org/licenses/gpl-license GPLv2 or later
  * @link       http://github.com/netresearch/contexts_geolocation
  */
-//use Netresearch\ContextsGeolocation\Adapter\AbstractAdapter;
 
 /**
  * Provides methods used in the backend by flexforms.
