@@ -49,7 +49,7 @@ class GeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      *
      * @return self|null
      */
-    public static function getInstance(?string $ip = null): ?self
+    public static function getInstance(?string $ip = null)
     {
         if (extension_loaded('geoip')) {
             return new self($ip);

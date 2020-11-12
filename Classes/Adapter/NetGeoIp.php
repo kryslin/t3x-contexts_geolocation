@@ -114,7 +114,7 @@ class NetGeoIp extends \Netresearch\ContextsGeolocation\AbstractAdapter
      * @return self|null
      * @throws Exception
      */
-    public static function getInstance(?string $ip = null): ?self
+    public static function getInstance(?string $ip = null)
     {
         if (self::checkPear() && class_exists('Net_GeoIP', true)) {
             return new self($ip);

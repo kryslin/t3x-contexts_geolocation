@@ -40,7 +40,7 @@ abstract class AbstractAdapter
      * @return self
      * @throws Exception
      */
-    public static function getInstance(?string $ip = null): self
+    public static function getInstance(?string $ip = null)
     {
         static $instance = null;
 
