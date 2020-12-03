@@ -13,7 +13,11 @@ namespace Netresearch\ContextsGeolocation;
  * @link       http://github.com/netresearch/contexts_geolocation
  */
 use Netresearch\ContextsGeolocation\Adapter\GeoIp;
+use Netresearch\ContextsGeolocation\Adapter\GeoIp2;
 use Netresearch\ContextsGeolocation\Adapter\NetGeoIp;
+use Netresearch\ContextsGeolocation\Event\AdapterInstanceEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Abstract base class for each adapter.
@@ -44,6 +48,15 @@ abstract class AbstractAdapter
     {
         static $instance = null;
 
+        if ($instance !== null) {
+            return $instance;
+        }
+
+        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
+        $adapterEvent = new AdapterInstanceEvent($ip);
+        $eventDispatcher->dispatch($adapterEvent);
+
+        $instance = $adapterEvent->getAdapter();
         if ($instance !== null) {
             return $instance;
         }
